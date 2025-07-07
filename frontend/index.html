@@ -15,19 +15,59 @@
 </head>
 <body>
 
-    <!-- All your existing HTML content goes here... -->
+    <!-- Site Title -->
     <header class="absolute top-0 left-0 right-0 p-4 text-center">
         <h1 class="text-lg font-medium text-gray-400 tracking-wider">shape.</h1>
     </header>
 
+    <!-- Main Canvas Wrapper -->
     <main id="canvas-wrapper">
-        <!-- Toolbar, Canvas, etc. -->
-        <!-- ... -->
+        <!-- Toolbar -->
+        <div id="toolbar" class="bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg flex items-center space-x-2">
+            <button id="undo-btn" class="toolbar-btn" title="Undo" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3l2.3 2.3"/></svg>
+            </button>
+            <button id="redo-btn" class="toolbar-btn" title="Redo" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l-2.3 2.3"/></svg>
+            </button>
+            <button id="clear-btn" class="toolbar-btn" title="Clear All">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+            <button id="submit-btn" class="toolbar-btn bg-blue-600 hover:bg-blue-700" title="Submit Shape">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+        </div>
+
+        <!-- Fabric.js Canvas -->
+        <div class="canvas-container">
+            <canvas id="c"></canvas>
+        </div>
     </main>
     
-    <!-- Modals -->
-    <!-- ... -->
+    <!-- Confirmation Modal for Clear -->
+    <div id="confirmation-modal" class="modal hidden">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-center">
+            <h3 class="text-lg font-medium text-gray-900">Clear Canvas</h3>
+            <p class="text-sm text-gray-500 mt-2">Are you sure you want to erase everything?</p>
+            <div class="mt-6 flex justify-center space-x-4">
+                <button id="confirm-no" class="px-6 py-2 rounded-md text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200">Cancel</button>
+                <button id="confirm-yes" class="px-6 py-2 rounded-md text-sm font-medium text-white bg-red-600 hover:bg-red-700">Clear</button>
+            </div>
+        </div>
+    </div>
 
+    <!-- Result Modal for Submission -->
+    <div id="result-modal" class="modal hidden">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm text-center flex flex-col items-center">
+            <h3 class="text-lg font-medium text-gray-900">Shape Matched!</h3>
+            <p id="similarity-score" class="text-sm text-gray-500 mt-1"></p>
+            <img id="result-image" src="" alt="Matched shape preview" class="my-4 rounded-md bg-gray-200 w-48 h-48 object-cover" onerror="this.src='https://placehold.co/192x192/e2e8f0/4a5568?text=Error';">
+            <div class="mt-2 flex w-full space-x-4">
+                <button id="retry-btn" class="flex-1 px-4 py-2 rounded-md text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200">Retry</button>
+                <button id="continue-btn" class="flex-1 px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">Continue</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Load config first, then the main app script -->
     <script src="js/config.js"></script>
