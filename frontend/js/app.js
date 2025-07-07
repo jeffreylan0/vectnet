@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- API Configuration ---
-    // Define a single, consistent URL for the backend API endpoint.
-    const API_URL = 'http://localhost:3001/api/shapes/recognize';
+    // This file now uses the global API_URL defined in config.js
+    // No need to define it here anymore.
 
     // --- Element Selection ---
     const canvasEl = document.getElementById('c');
@@ -123,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     redoBtn.addEventListener('click', redo);
     clearBtn.addEventListener('click', () => confirmationModal.classList.remove('hidden'));
 
-    // --- SUBMIT LOGIC (UPDATED) ---
+    // --- SUBMIT LOGIC ---
     submitBtn.addEventListener('click', async () => {
         if (isProcessing || canvas.getObjects().length === 0) return;
         
@@ -134,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const imageData = canvas.toDataURL({ format: 'png' });
         
         try {
+            // This uses the global API_URL from config.js
             const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
@@ -165,9 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Configure result modal for an error response
             resultModalTitle.textContent = 'Submission Failed';
             similarityScoreEl.textContent = 'Could not identify shape — please try again.';
-            resultImage.style.display = 'none'; // Hide the image element
-            retryBtn.style.display = 'none'; // Hide the retry button
-            continueBtn.textContent = 'OK'; // Change continue button to an acknowledgement
+            resultImage.style.display = 'none';
+            retryBtn.style.display = 'none';
+            continueBtn.textContent = 'OK';
             
             resultModal.classList.remove('hidden');
         } finally {
